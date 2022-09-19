@@ -8,7 +8,7 @@ from ..testbeds import SliceTestBed
 
 
 @pytest.mark.parametrize(
-    "init_params,type", product(["random", "confusion"], ["numpy", "torch"])
+    "init_params,type", product(["random", "kmeans"], ["numpy", "torch"])
 )
 def test_domino_results(init_params: str, type: str):
 
