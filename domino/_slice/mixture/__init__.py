@@ -288,11 +288,17 @@ class MixtureSlicer(Slicer):
 
         self.mm.fit(embeddings=embeddings, targets=targets, pred_probs=pred_probs)
 
-        self.slice_cluster_indices = (
-            -np.abs(
-                (self.mm.variables[2].probs - self.mm.variables[1].probs).max(axis=1)
-            )
-        ).argsort()[: self.config.n_slices]
+        # TODO: fix this: it's a hack!
+        if len(self.mm.variables) == 2:
+            self.slice_cluster_indices =  -np.abs(
+                (self.mm.variables[1].probs).max(axis=1)
+            ).argsort()[: self.config.n_slices]
+        else:
+            self.slice_cluster_indices = (
+                -np.abs(
+                    (self.mm.variables[2].probs - self.mm.variables[1].probs).max(axis=1)
+                )
+            ).argsort()[: self.config.n_slices]
         return self
 
     def predict(

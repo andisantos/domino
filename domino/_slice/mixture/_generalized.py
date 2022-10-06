@@ -450,6 +450,7 @@ class CategoricalVariable(Variable):
             y = label_binarize(y, classes=np.arange(np.max(y) + 1))
         if y.ndim == 1:
             y = y[:, np.newaxis]
+        print(y.shape)
         if y.shape[-1] == 1:
             # binary targets transform to a column vector with label_binarize
             y = np.array([1 - y[:, 0], y[:, 0]]).T
