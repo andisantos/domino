@@ -33,7 +33,7 @@ def infer_modality(col: mk.Column):
 
 
 def embed(
-    data: mk.DataPanel,
+    data: mk.DataFrame,
     input_col: str,
     encoder: Union[str, Encoder] = "clip",
     modality: str = None,
@@ -43,13 +43,13 @@ def embed(
     num_workers: int = 4,
     batch_size: int = 128,
     **kwargs,
-) -> mk.DataPanel:
+) -> mk.DataFrame:
     """Embed a column of data with an encoder from the encoder registry.
 
     Examples
     --------
     Suppose you have an Image dataset (e.g. Imagenette, CIFAR-10) loaded into a
-    `Meerkat DataPanel <https://github.com/robustness-gym/meerkat>`_. You can embed the
+    `Meerkat DataFrame <https://github.com/robustness-gym/meerkat>`_. You can embed the
     images in the dataset with CLIP using a code snippet like:
 
     .. code-block:: python
@@ -67,7 +67,7 @@ def embed(
 
 
     Args:
-        data (mk.DataPanel): A DataPanel containing the data to embed.
+        data (mk.DataFrame): A DataFrame containing the data to embed.
         input_col (str): The name of the column to embed.
         encoder (Union[str, Encoder], optional): Name of the encoder to use. List
             supported encoders with ``domino.encoders``. Defaults to "clip".
@@ -90,7 +90,7 @@ def embed(
             :func:`~domino._embed.clip`).
 
     Returns:
-        mk.DataPanel: A view of ``data`` with a new column containing the embeddings.
+        mk.DataFrame: A view of ``data`` with a new column containing the embeddings.
         This column will be named according to the ``out_col`` parameter.
     """
     if modality is None:
@@ -122,7 +122,7 @@ def embed(
 
 
 def _embed(
-    data: mk.DataPanel,
+    data: mk.DataFrame,
     input_col: str,
     out_col: str,
     encode: Callable,
@@ -137,7 +137,7 @@ def _embed(
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
     if preprocess is not None:
-        embed_input = data[input_col].to_lambda(preprocess)
+        embed_input = data[input_col].defer(preprocess)
     else:
         embed_input = data[input_col]
 

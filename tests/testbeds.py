@@ -67,7 +67,7 @@ class SliceTestBed:
         preds = (clusters == 1) | (clusters == 2)
 
         self.clusters = clusters
-        self.dp = mk.DataPanel(
+        self.dp = mk.DataFrame(
             {
                 "embedding": conversion(emb),
                 "target": conversion(targets),

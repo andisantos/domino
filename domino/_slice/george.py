@@ -54,7 +54,7 @@ class GeorgeSDM(SliceDiscoveryMethod):
                 f"Reduction method {self.config.reduction_method} not supported."
             )
 
-    def _compute_losses(self, data_dp: mk.DataPanel):
+    def _compute_losses(self, data_dp: mk.DataFrame):
         probs = (
             data_dp["probs"].data
             if isinstance(data_dp["probs"], mk.TensorColumn)
@@ -71,7 +71,7 @@ class GeorgeSDM(SliceDiscoveryMethod):
     )
     def fit(
         self,
-        data_dp: mk.DataPanel,
+        data_dp: mk.DataFrame,
         model: nn.Module = None,
     ):
         data_dp["loss"] = self._compute_losses(data_dp).data.numpy()
@@ -113,7 +113,7 @@ class GeorgeSDM(SliceDiscoveryMethod):
     )
     def transform(
         self,
-        data_dp: mk.DataPanel,
+        data_dp: mk.DataFrame,
     ):
         slices = np.zeros((len(data_dp), self.config.n_slices))
 

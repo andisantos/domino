@@ -17,7 +17,7 @@ def generate_candidate_descriptions(
     num_candidates: str = 30_000,
     num_seed_words: int = 10_000,
     score_with_gpt: bool = False,
-) -> mk.DataPanel:
+) -> mk.DataFrame:
     words_dp = _get_wiki_words(top_k=num_seed_words, eng_only=True)
     from transformers import BertForMaskedLM, BertTokenizer
 
@@ -85,16 +85,16 @@ def generate_candidate_descriptions(
             }
 
         # unclear how to get loss for a batch of sentences
-        return mk.DataPanel.from_pandas(candidate_phrases)["output_phrase"].map(
+        return mk.DataFrame.from_pandas(candidate_phrases)["output_phrase"].map(
             _forward_lm, is_batched_fn=False, pbar=True
         )
 
-    return mk.DataPanel.from_pandas(candidate_phrases)
+    return mk.DataFrame.from_pandas(candidate_phrases)
 
 
 def _get_wiki_words(top_k: int = 1e5, eng_only: bool = False):
     df = pd.read_csv(
-        "https://github.com/IlyaSemenov/wikipedia-word-frequency/raw/master/results/enwiki-20190320-words-frequency.txt",
+        "https://github.com/IlyaSemenov/wikipedia-word-frequency/raw/master/results/enwiki-2023-04-13.txt",
         delimiter=" ",
         names=["word", "frequency"],
     )
@@ -111,4 +111,4 @@ def _get_wiki_words(top_k: int = 1e5, eng_only: bool = False):
 
     df = df.sort_values("frequency", ascending=False)
     df = df.drop_duplicates(subset=["word"])
-    return mk.DataPanel.from_pandas(df.iloc[: int(top_k)])
+    return mk.DataFrame.from_pandas(df.iloc[: int(top_k)])

@@ -55,7 +55,7 @@ def _run_domino(problem, n_slices, n_mixtures):
 
     # Predict on test-data
     print("Predicting slices for test images:")
-    result = mk.DataPanel({"id": test_dp["id"]})
+    result = mk.DataFrame({"id": test_dp["id"]})
     result["slice_preds"] = domino.predict(
         test_dp, embeddings="clip(image)", targets="target", pred_probs="probs"
     )

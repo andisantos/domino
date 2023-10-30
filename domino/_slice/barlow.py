@@ -29,14 +29,14 @@ class BarlowSlicer(Slicer):
     Examples
     --------
     Suppose you've trained a model and stored its predictions on a dataset in
-    a `Meerkat DataPanel <https://github.com/robustness-gym/meerkat>`_ with columns
-    "emb", "target", and "pred_probs". After loading the DataPanel, you can discover
+    a `Meerkat DataFrame <https://github.com/robustness-gym/meerkat>`_ with columns
+    "emb", "target", and "pred_probs". After loading the DataFrame, you can discover
     underperforming slices of the validation dataset with the following:
 
     .. code-block:: python
 
         from domino import BarlowSlicer
-        dp = ...  # Load dataset into a Meerkat DataPanel
+        dp = ...  # Load dataset into a Meerkat DataFrame
 
         # split dataset
         valid_dp = dp[dp["split"] == "valid"]
@@ -101,7 +101,7 @@ class BarlowSlicer(Slicer):
 
     def fit(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",
@@ -110,7 +110,7 @@ class BarlowSlicer(Slicer):
         Fit the decision tree to data.
 
         Args:
-            data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+            data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
                 embeddings, targets, and prediction probabilities. The names of the
                 columns can be specified with the ``embeddings``, ``targets``, and
                 ``pred_probs`` arguments. Defaults to None.
@@ -176,7 +176,7 @@ class BarlowSlicer(Slicer):
 
     def predict(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",
@@ -189,7 +189,7 @@ class BarlowSlicer(Slicer):
 
 
         Args:
-            data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+            data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
                 embeddings, targets, and prediction probabilities. The names of the
                 columns can be specified with the ``embeddings``, ``targets``, and
                 ``pred_probs`` arguments. Defaults to None.
@@ -229,7 +229,7 @@ class BarlowSlicer(Slicer):
 
     def predict_proba(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",
@@ -246,7 +246,7 @@ class BarlowSlicer(Slicer):
             ``BarlowSlicer.predict_proba``.
 
         Args:
-            data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+            data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
                 embeddings, targets, and prediction probabilities. The names of the
                 columns can be specified with the ``embeddings``, ``targets``, and
                 ``pred_probs`` arguments. Defaults to None.

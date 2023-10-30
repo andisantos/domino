@@ -13,7 +13,7 @@ class MeanDescriber(Describer):
     """
 
     Args:
-        text (str, optional): A `Meerkat DataPanel` with columns for text phrases and
+        text (str, optional): A `Meerkat DataFrame` with columns for text phrases and
             their embeddings. The names of the columns can be specified with the
             ``text_embeddings`` and ``phrase`` arguments. Defaults to None.
         text_embeddings (Union[str, np.ndarray], optional): The name of a colum in
@@ -30,7 +30,7 @@ class MeanDescriber(Describer):
 
     def __init__(
         self,
-        data: mk.DataPanel = None,
+        data: mk.DataFrame = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         candidates: Union[str, np.ndarray] = "candidates",
         slice_threshold: float = 0.5,
@@ -46,7 +46,7 @@ class MeanDescriber(Describer):
     
     def describe(
         self,
-        data: mk.DataPanel = None, 
+        data: mk.DataFrame = None, 
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         slices: Union[str, np.ndarray] = "slices",
@@ -87,7 +87,7 @@ class ClassifierMeanDescriber(Describer):
     """
 
     Args:
-        text (str, optional): A `Meerkat DataPanel` with columns for text phrases and
+        text (str, optional): A `Meerkat DataFrame` with columns for text phrases and
             their embeddings. The names of the columns can be specified with the
             ``text_embeddings`` and ``phrase`` arguments. Defaults to None.
         text_embeddings (Union[str, np.ndarray], optional): The name of a colum in
@@ -104,7 +104,7 @@ class ClassifierMeanDescriber(Describer):
 
     def __init__(
         self,
-        data: mk.DataPanel = None,
+        data: mk.DataFrame = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         candidates: Union[str, np.ndarray] = "candidates",
         slice_threshold: float = 0.5,
@@ -120,7 +120,7 @@ class ClassifierMeanDescriber(Describer):
     
     def describe(
         self,
-        data: mk.DataPanel = None, 
+        data: mk.DataFrame = None, 
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         slices: Union[str, np.ndarray] = "slices",

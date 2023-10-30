@@ -18,7 +18,7 @@ class FusedSlicer(Slicer, nn.Module):
     def __init__(
         self,
         n_slices: int = 5,
-        candidate_text: mk.DataPanel = None,
+        candidate_text: mk.DataFrame = None,
         text_column: Union[str, np.np.ndarray] = "text",
         text_embedding_column: Union[str, np.np.ndarray] = "embedding",
         device: Union[int, str] = "cpu",
@@ -44,7 +44,7 @@ class FusedSlicer(Slicer, nn.Module):
 
     def fit(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -83,7 +83,7 @@ class FusedSlicer(Slicer, nn.Module):
 
     def predict(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -95,7 +95,7 @@ class FusedSlicer(Slicer, nn.Module):
 
     def predict_proba(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -111,10 +111,10 @@ class FusedSlicer(Slicer, nn.Module):
 
     def describe(
         self,
-        text_data: Union[dict, mk.DataPanel] = None,
+        text_data: Union[dict, mk.DataFrame] = None,
         text_embeddings: Union[str, np.ndarray] = "embedding",
         text_descriptions: Union[str, np.ndarray] = "description",
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         num_descriptions: int = 3,
     ):

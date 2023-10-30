@@ -11,14 +11,14 @@ from tqdm import tqdm
 
 def compute_metrics(
     solutions: List[SliceDiscoverySolution], run_id: int = None
-) -> Tuple[mk.DataPanel]:
+) -> Tuple[mk.DataFrame]:
     global_metrics = []
     slice_metrics = []
     for solution in tqdm(solutions):
         g, s = compute_solution_metrics(solution)
         global_metrics.append(g)
         slice_metrics.extend(s)
-    return mk.DataPanel(global_metrics), mk.DataPanel(slice_metrics)
+    return mk.DataFrame(global_metrics), mk.DataFrame(slice_metrics)
 
 
 def compute_solution_metrics(
@@ -38,7 +38,7 @@ def compute_solution_metrics(
 
 
 def _compute_metrics(
-    data: mk.DataPanel,
+    data: mk.DataFrame,
     slice_target_column: str,
     slice_pred_column: str,
     slice_prob_column: str,

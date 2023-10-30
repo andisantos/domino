@@ -40,7 +40,7 @@ class MLPSlicer(Slicer, nn.Module):
 
     def fit(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -57,7 +57,7 @@ class MLPSlicer(Slicer, nn.Module):
 
     def predict(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -71,7 +71,7 @@ class MLPSlicer(Slicer, nn.Module):
 
     def predict_proba(
         self,
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -86,10 +86,10 @@ class MLPSlicer(Slicer, nn.Module):
 
     def describe(
         self,
-        text_data: Union[dict, mk.DataPanel],
+        text_data: Union[dict, mk.DataFrame],
         text_embeddings: Union[str, np.ndarray] = "embedding",
         text_descriptions: Union[str, np.ndarray] = "description",
-        data: Union[dict, mk.DataPanel] = None,
+        data: Union[dict, mk.DataFrame] = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         num_descriptions: int = 3,
     ):

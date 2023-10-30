@@ -38,7 +38,7 @@ def run_sdms(
     problems: List[SliceDiscoveryProblem],
     slicer_class: type,
     slicer_config: dict,
-    emb_dp: mk.DataPanel,
+    emb_dp: mk.DataFrame,
     embedding_col: str = "emb",
     batch_size: int = 1,
     num_workers: int = 0,
@@ -99,7 +99,7 @@ def run_sdm(
     # candidate_descriptions: Descriptions,
     slicer_class: type,
     slicer_config: dict,
-    emb_dp: mk.DataPanel,
+    emb_dp: mk.DataFrame,
     embedding_col: str = "emb",
 ) -> SliceDiscoverySolution:
     val_dp = problem.merge(split="val")
@@ -110,7 +110,7 @@ def run_sdm(
 
     test_dp = problem.merge(split="test")
     test_dp = test_dp.merge(emb_dp["id", embedding_col], on="id", how="left")
-    result = mk.DataPanel({"id": test_dp["id"]})
+    result = mk.DataFrame({"id": test_dp["id"]})
     result["slice_preds"] = slicer.predict(
         test_dp, embeddings=embedding_col, targets="target", pred_probs="probs"
     )

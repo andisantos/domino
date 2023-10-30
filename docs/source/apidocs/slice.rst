@@ -13,7 +13,7 @@ All slicers in Domino share a common, sklearn-esque API. They each implement thr
 All three methods accept ``embeddings``, ``targets``, ``pred_probs``, and ``losses``. There are two ways to use these arguments:
 
 1. By passing `NumPy arrays <https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html>`_ directly. 
-2. By passing a `Meerkat DataPanel <https://meerkat.readthedocs.io/en/latest/guide/data_structures.html#datapanel>`_ to the ``data`` argument and string column names to ``embeddings``, ``targets``, ``pred_probs``, and ``losses``. 
+2. By passing a `Meerkat DataFrame <https://meerkat.readthedocs.io/en/latest/guide/data_structures.html#DataFrame>`_ to the ``data`` argument and string column names to ``embeddings``, ``targets``, ``pred_probs``, and ``losses``. 
 
 Note that not all slicers require all arguments. For example, the :class:`~domino.DominoSlicer` requires the `embeddings`, `target`, and `pred_probs` arguments for :meth:`~domino.Slicer.fit`, but only ``embeddings`` is required for :meth:`~domino.Slicer.predict` and :meth:`~domino.Slicer.predict_proba`.
 
@@ -22,7 +22,7 @@ Consider this simple example where we :meth:`~domino.Slicer.fit` the :class:`~do
 .. code-block:: python
 
         from domino import DominoSlicer
-        dp = ...  # load a dataset with columns "emb", "target" and "pred_probs" into a Meerkat DataPanel
+        dp = ...  # load a dataset with columns "emb", "target" and "pred_probs" into a Meerkat DataFrame
 
         # split dataset
         valid_dp = dp[dp["split"] == "valid"]
