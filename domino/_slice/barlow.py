@@ -39,8 +39,8 @@ class BarlowSlicer(Slicer):
         dp = ...  # Load dataset into a Meerkat DataPanel
 
         # split dataset
-        valid_dp = dp.lz[dp["split"] == "valid"]
-        test_dp = dp.lz[dp["split"] == "test"]
+        valid_dp = dp[dp["split"] == "valid"]
+        test_dp = dp[dp["split"] == "test"]
 
         barlow = BarlowSlicer()
         barlow.fit(

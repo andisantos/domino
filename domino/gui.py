@@ -73,8 +73,8 @@ def explore(
         dp = ...  # prepare the dataset as a Meerkat DataPanel
 
         # split dataset
-        valid_dp = dp.lz[dp["split"] == "valid"]
-        test_dp = dp.lz[dp["split"] == "test"]
+        valid_dp = dp[dp["split"] == "valid"]
+        test_dp = dp[dp["split"] == "test"]
 
         domino = DominoSDM()
         domino.fit(data=valid_dp)
@@ -176,7 +176,7 @@ def explore(
 
         with dp_output:
             display(
-                dp.lz[
+                dp[
                     (-slices[:, slice_idx]).argsort()[
                         page_size
                         * page_idx : min(

@@ -67,7 +67,7 @@ def train(
         }
     )
 
-    train_dp = dp.lz[dp["split"] == train_split]
+    train_dp = dp[dp["split"] == train_split]
     if model.config.get("train_transform", None) is not None:
         train_dp["input"] = train_dp["input"].to_lambda(model.config["train_transform"])
 
@@ -77,7 +77,7 @@ def train(
         num_workers=num_workers,
     )
 
-    valid_dp = dp.lz[dp["split"] == valid_split]
+    valid_dp = dp[dp["split"] == valid_split]
     if model.config.get("transform", None) is not None:
         valid_dp["input"] = valid_dp["input"].to_lambda(model.config["transform"])
     valid_dl = DataLoader(

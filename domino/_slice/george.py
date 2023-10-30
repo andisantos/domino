@@ -78,7 +78,7 @@ class GeorgeSDM(SliceDiscoveryMethod):
         self.slice_cluster_indices = {}
         for klass in range(self.config.n_classes):
             # filter `data_dp` to only include rows in the class
-            curr_dp = data_dp.lz[data_dp["target"] == klass]
+            curr_dp = data_dp[data_dp["target"] == klass]
 
             # (1) reduction phase
             embs = curr_dp[self.config.emb].data
@@ -120,7 +120,7 @@ class GeorgeSDM(SliceDiscoveryMethod):
         start = 0
         for klass in range(self.config.n_classes):
             # filter `data_dp` to only include rows in the class
-            curr_dp = data_dp.lz[data_dp["target"] == klass]
+            curr_dp = data_dp[data_dp["target"] == klass]
 
             # (1) reduction phase
             acts = curr_dp[self.config.emb].data

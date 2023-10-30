@@ -25,8 +25,8 @@ Consider this simple example where we :meth:`~domino.Slicer.fit` the :class:`~do
         dp = ...  # load a dataset with columns "emb", "target" and "pred_probs" into a Meerkat DataPanel
 
         # split dataset
-        valid_dp = dp.lz[dp["split"] == "valid"]
-        test_dp = dp.lz[dp["split"] == "test"]
+        valid_dp = dp[dp["split"] == "valid"]
+        test_dp = dp[dp["split"] == "test"]
 
         domino = DominoSlicer()
         domino.fit(

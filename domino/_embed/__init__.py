@@ -22,11 +22,11 @@ encoders.register(robust, aliases=[])
 encoders.register(transformers, aliases=[])
 
 
-def infer_modality(col: mk.AbstractColumn):
+def infer_modality(col: mk.Column):
 
     if isinstance(col, mk.ImageColumn):
         return "image"
-    elif isinstance(col, mk.PandasSeriesColumn):
+    elif isinstance(col, mk.ScalarColumn):
         return "text"
     else:
         raise ValueError(f"Cannot infer modality from colummn of type {type(col)}.")
@@ -145,12 +145,12 @@ def _embed(
         embed_input.collate_fn = collate
 
     def _prepare_input(x):
-        if isinstance(x, mk.AbstractColumn):
-            x = x.data 
+        if isinstance(x, mk.Column):
+            x = x.data
         if torch.is_tensor(x):
             x = x.to(device)
         return x
-    
+
     with torch.no_grad():
         data[out_col] = embed_input.map(
             lambda x: encode(_prepare_input(x)).cpu().detach().numpy(),

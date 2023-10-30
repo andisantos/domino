@@ -18,7 +18,7 @@ def unpack_args(data: mk.DataPanel, *args):
     for arg in args:
         if isinstance(arg, str):
             arg = data[arg]
-        if isinstance(arg, mk.AbstractColumn):
+        if isinstance(arg, mk.Column):
             # this is necessary because torch.tensor() of a NumpyArrayColumn is very
             # slow and I don't want implementers to have to deal with casing on this
             arg = arg.data

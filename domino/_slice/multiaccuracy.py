@@ -10,7 +10,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from meerkat.columns.tensor_column import TensorColumn
+from meerkat.columns.tensor.torch import TorchTensorColumn
 from sklearn.linear_model import Ridge
 from sklearn.metrics import roc_auc_score
 from torch.nn.functional import cross_entropy
@@ -27,7 +27,7 @@ class MultiaccuracySlicer(Slicer):
     r"""
     Slice discovery based on MultiAccuracy auditing [kim_2019].
 
-    Discover slices by learning a simple function (e.g. ridge regression) that 
+    Discover slices by learning a simple function (e.g. ridge regression) that
     correlates with the residual.
 
     Examples
@@ -43,8 +43,8 @@ class MultiaccuracySlicer(Slicer):
         dp = ...  # Load dataset into a Meerkat DataPanel
 
         # split dataset
-        valid_dp = dp.lz[dp["split"] == "valid"]
-        test_dp = dp.lz[dp["split"] == "test"]
+        valid_dp = dp[dp["split"] == "valid"]
+        test_dp = dp[dp["split"] == "test"]
 
         slicer = MultiaccuracySlicer()
         slicer.fit(
@@ -58,11 +58,11 @@ class MultiaccuracySlicer(Slicer):
     Args:
         n_slices (int, optional): The number of slices to discover.
             Defaults to 5.
-        eta (float, optional): Step size for the logits update, see final line 
+        eta (float, optional): Step size for the logits update, see final line
             Algorithm 1 in . Defaults to 0.1
-        dev_valid_frac (float, optional): The fraction of data held out for computing 
-            corr. Defaults to 0.3. 
-    
+        dev_valid_frac (float, optional): The fraction of data held out for computing
+            corr. Defaults to 0.3.
+
     .. [kim_2019]
 
         @inproceedings{kim2019multiaccuracy,
@@ -90,8 +90,8 @@ class MultiaccuracySlicer(Slicer):
         self.config.partition_size_threshold = partition_size_threshold
 
         self.auditors = []
-        
-        self.pbar = pbar 
+
+        self.pbar = pbar
 
     def fit(
         self,
