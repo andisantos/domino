@@ -24,7 +24,7 @@ class CorrelationImpossibleError(ValueError):
 
 
 def induce_correlation(
-    dp: Union[pd.DataFrame, mk.DataPanel],
+    dp: Union[pd.DataFrame, mk.DataFrame],
     corr: float,
     n: int,
     attr_a: str,

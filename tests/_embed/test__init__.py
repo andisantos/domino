@@ -50,7 +50,7 @@ def simple_encoder(monkeypatch):
 def test_embed_images(tmpdir: str, simple_encoder):
     image_testbed = ImageColumnTestBed(tmpdir=tmpdir)
 
-    dp = mk.DataPanel({"image": image_testbed.col})
+    dp = mk.DataFrame({"image": image_testbed.col})
     dp = embed(
         data=dp,
         input_col="image",
@@ -59,7 +59,7 @@ def test_embed_images(tmpdir: str, simple_encoder):
         num_workers=0,
     )
 
-    assert isinstance(dp, mk.DataPanel)
+    assert isinstance(dp, mk.DataFrame)
     assert "_simple_encoder(image)" in dp
     assert (
         simple_image_transform(dp["image"][0]).mean()
@@ -70,7 +70,7 @@ def test_embed_images(tmpdir: str, simple_encoder):
 def test_embed_text(simple_encoder):
     testbed = TextColumnTestBed()
 
-    dp = mk.DataPanel({"text": testbed.col})
+    dp = mk.DataFrame({"text": testbed.col})
     dp = embed(
         data=dp,
         input_col="text",
@@ -79,7 +79,7 @@ def test_embed_text(simple_encoder):
         num_workers=0,
     )
 
-    assert isinstance(dp, mk.DataPanel)
+    assert isinstance(dp, mk.DataFrame)
     assert "_simple_encoder(text)" in dp
     assert (
         simple_text_transform(dp["text"][0]).to(torch.float32).mean()

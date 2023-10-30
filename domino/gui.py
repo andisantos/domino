@@ -13,20 +13,20 @@ from ._describe import describe
 
 
 def explore(
-    data: mk.DataPanel = None,
+    data: mk.DataFrame = None,
     embeddings: Union[str, np.ndarray] = "embedding",
     targets: Union[str, np.ndarray] = "target",
     pred_probs: Union[str, np.ndarray] = "pred_prob",
     slices: Union[str, np.ndarray] = "slices",
-    text: mk.DataPanel = None,
+    text: mk.DataFrame = None,
     text_embeddings: Union[str, np.ndarray] = "embedding",
     phrase: Union[str, np.ndarray] = "output_phrase",
 ) -> None:
     """Creates a IPyWidget GUI for exploring discovered slices. The GUI includes two
     sections: (1) The first section displays data visualizations summarizing the
     model predictions and accuracy stratified by slice. (2) The second section displays
-    a table (i.e. Meerkat DataPanel) of the data examples most representative of each
-    slice. The DataPanel passed to ``data`` should include columns for embeddings,
+    a table (i.e. Meerkat DataFrame) of the data examples most representative of each
+    slice. The DataFrame passed to ``data`` should include columns for embeddings,
     targets, pred_probs and slices. Any additional columns will be included in the
     visualization in section (2).
 
@@ -35,7 +35,7 @@ def explore(
         in a Jupyter Lab or VSCode environment.
 
     Args:
-        data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+        data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
             embeddings, targets, and prediction probabilities. The names of the
             columns can be specified with the ``embeddings``, ``targets``, and
             ``pred_probs`` arguments. Defaults to None.
@@ -54,7 +54,7 @@ def explore(
         slices (str, optional): The name of The name of a column in ``data``
             holding discovered slices. If ``data`` is ``None``, then an
             np.ndarray of shape (num_examples, num_slices). Defaults to "slices".
-        text (str, optional): A `Meerkat DataPanel` with columns for text phrases and
+        text (str, optional): A `Meerkat DataFrame` with columns for text phrases and
             their embeddings. The names of the columns can be specified with the
             ``text_embeddings`` and ``phrase`` arguments. Defaults to None.
         text_embeddings (Union[str, np.ndarray], optional): The name of a colum in
@@ -70,11 +70,11 @@ def explore(
         :name: Example:
 
         from domino import explore, DominoSDM
-        dp = ...  # prepare the dataset as a Meerkat DataPanel
+        dp = ...  # prepare the dataset as a Meerkat DataFrame
 
         # split dataset
-        valid_dp = dp.lz[dp["split"] == "valid"]
-        test_dp = dp.lz[dp["split"] == "test"]
+        valid_dp = dp[dp["split"] == "valid"]
+        test_dp = dp[dp["split"] == "test"]
 
         domino = DominoSDM()
         domino.fit(data=valid_dp)
@@ -89,7 +89,7 @@ def explore(
     )
 
     if data is None:
-        dp = mk.DataPanel(
+        dp = mk.DataFrame(
             {
                 "embeddings": embeddings,
                 "targets": targets,
@@ -98,7 +98,7 @@ def explore(
             }
         )
     else:
-        dp = data if isinstance(data, mk.DataPanel) else mk.DataPanel(data)
+        dp = data if isinstance(data, mk.DataFrame) else mk.DataFrame(data)
 
     plot_output = widgets.Output()
 
@@ -176,7 +176,7 @@ def explore(
 
         with dp_output:
             display(
-                dp.lz[
+                dp[
                     (-slices[:, slice_idx]).argsort()[
                         page_size
                         * page_idx : min(

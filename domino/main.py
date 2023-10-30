@@ -13,7 +13,7 @@ from ._describe.mean import MeanDescriber
 
 
 def discover(
-    data: Union[dict, mk.DataPanel] = None,
+    data: Union[dict, mk.DataFrame] = None,
     embeddings: Union[str, np.ndarray] = "embedding",
     targets: Union[str, np.ndarray] = "target",
     pred_probs: Union[str, np.ndarray] = "pred_probs",

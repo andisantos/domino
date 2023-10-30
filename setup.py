@@ -29,11 +29,9 @@ REQUIRED = [
     "pandas",
     "numpy>=1.18.0",
     "tqdm>=4.49.0",
-    # TODO: support scikit-learn 1.0.0
-    "scikit-learn==0.24.2",
+    "scikit-learn",
     "ipywidgets",
     "seaborn",
-    "torch",
 ]
 
 EXTRAS = {

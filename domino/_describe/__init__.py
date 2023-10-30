@@ -7,20 +7,20 @@ from domino.utils import unpack_args
 
 
 def describe(
-    data: mk.DataPanel = None,
+    data: mk.DataFrame = None,
     embeddings: Union[str, np.ndarray] = "embedding",
     targets: Union[str, np.ndarray] = "target",
     slices: Union[str, np.ndarray] = "slices",
-    text: mk.DataPanel = None,
+    text: mk.DataFrame = None,
     text_embeddings: Union[str, np.ndarray] = "embedding",
     phrases: Union[str, np.ndarray] = "output_phrase",
     slice_idx: int = 0,
     slice_threshold: float = 0.5,
-) -> mk.DataPanel:
+) -> mk.DataFrame:
     """Generate descriptions of a discovered slice.
 
     Args:
-        data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+        data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
             embeddings, targets, and prediction probabilities. The names of the
             columns can be specified with the ``embeddings``, ``targets``, and
             ``pred_probs`` arguments. Defaults to None.
@@ -39,7 +39,7 @@ def describe(
         slices (str, optional): The name of The name of a column in ``data``
             holding discovered slices. If ``data`` is ``None``, then an
             np.ndarray of shape (num_examples, num_slices). Defaults to "slices".
-        text (str, optional): A `Meerkat DataPanel` with columns for text phrases and
+        text (str, optional): A `Meerkat DataFrame` with columns for text phrases and
             their embeddings. The names of the columns can be specified with the
             ``text_embeddings`` and ``phrase`` arguments. Defaults to None.
         text_embeddings (Union[str, np.ndarray], optional): The name of a colum in
@@ -53,7 +53,7 @@ def describe(
             the slice. Defaults to 0.5.
 
     Returns:
-        mk.DataPanel: A `Meerkat DataPanel` with columns for the slice description.
+        mk.DataFrame: A `Meerkat DataFrame` with columns for the slice description.
 
 
     Examples
@@ -101,4 +101,4 @@ def describe(
     ref_proto = embeddings[targets == mode_target].mean(axis=0)
 
     scores = np.dot(text_embeddings, (slice_proto - ref_proto))
-    return mk.DataPanel({"score": scores, "phrase": phrases})
+    return mk.DataFrame({"score": scores, "phrase": phrases})

@@ -26,13 +26,13 @@ class Slicer(ABC, BaseEstimator):
     def fit(
         self,
         model: nn.Module = None,
-        data_dp: mk.DataPanel = None,
+        data_dp: mk.DataFrame = None,
     ) -> Slicer:
         """
         Fit the slicer to data.
 
         Args:
-            data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+            data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
                 embeddings, targets, and prediction probabilities. The names of the
                 columns can be specified with the ``embeddings``, ``targets``, and
                 ``pred_probs`` arguments. Defaults to None.
@@ -60,7 +60,7 @@ class Slicer(ABC, BaseEstimator):
     @abstractmethod
     def predict(
         self,
-        data: mk.DataPanel,
+        data: mk.DataFrame,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",
@@ -74,7 +74,7 @@ class Slicer(ABC, BaseEstimator):
 
 
         Args:
-            data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+            data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
                 embeddings, targets, and prediction probabilities. The names of the
                 columns can be specified with the ``embeddings``, ``targets``, and
                 ``pred_probs`` arguments. Defaults to None.
@@ -103,7 +103,7 @@ class Slicer(ABC, BaseEstimator):
     @abstractmethod
     def predict_proba(
         self,
-        data: mk.DataPanel,
+        data: mk.DataFrame,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",
@@ -118,7 +118,7 @@ class Slicer(ABC, BaseEstimator):
 
 
         Args:
-            data (mk.DataPanel, optional): A `Meerkat DataPanel` with columns for
+            data (mk.DataFrame, optional): A `Meerkat DataFrame` with columns for
                 embeddings, targets, and prediction probabilities. The names of the
                 columns can be specified with the ``embeddings``, ``targets``, and
                 ``pred_probs`` arguments. Defaults to None.

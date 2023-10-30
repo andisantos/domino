@@ -54,7 +54,7 @@ class GeorgeSDM(SliceDiscoveryMethod):
                 f"Reduction method {self.config.reduction_method} not supported."
             )
 
-    def _compute_losses(self, data_dp: mk.DataPanel):
+    def _compute_losses(self, data_dp: mk.DataFrame):
         probs = (
             data_dp["probs"].data
             if isinstance(data_dp["probs"], mk.TensorColumn)
@@ -71,14 +71,14 @@ class GeorgeSDM(SliceDiscoveryMethod):
     )
     def fit(
         self,
-        data_dp: mk.DataPanel,
+        data_dp: mk.DataFrame,
         model: nn.Module = None,
     ):
         data_dp["loss"] = self._compute_losses(data_dp).data.numpy()
         self.slice_cluster_indices = {}
         for klass in range(self.config.n_classes):
             # filter `data_dp` to only include rows in the class
-            curr_dp = data_dp.lz[data_dp["target"] == klass]
+            curr_dp = data_dp[data_dp["target"] == klass]
 
             # (1) reduction phase
             embs = curr_dp[self.config.emb].data
@@ -113,14 +113,14 @@ class GeorgeSDM(SliceDiscoveryMethod):
     )
     def transform(
         self,
-        data_dp: mk.DataPanel,
+        data_dp: mk.DataFrame,
     ):
         slices = np.zeros((len(data_dp), self.config.n_slices))
 
         start = 0
         for klass in range(self.config.n_classes):
             # filter `data_dp` to only include rows in the class
-            curr_dp = data_dp.lz[data_dp["target"] == klass]
+            curr_dp = data_dp[data_dp["target"] == klass]
 
             # (1) reduction phase
             acts = curr_dp[self.config.emb].data
