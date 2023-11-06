@@ -1,0 +1,23 @@
+FROM nvidia/cuda:11.0.3-devel-ubuntu20.04
+
+ENV PATH="/root/miniconda3/bin:${PATH}"
+ARG PATH="/root/miniconda3/bin:${PATH}"
+
+RUN apt-get update &&  apt-get install --yes gcc wget vim git 
+
+RUN wget \
+    https://repo.anaconda.com/miniconda/Miniconda3-py38_23.5.2-0-Linux-x86_64.sh \
+    && mkdir /root/.conda \
+    && bash /Miniconda3-py38_23.5.2-0-Linux-x86_64.sh -b \
+    && rm -f /Miniconda3-py38_23.5.2-0-Linux-x86_64.sh
+
+RUN conda --version
+
+RUN pip3 install opencv-python meerkat-ml scikit-learn==0.24.2 numpy==1.18.0 tqdm==4.49.0 
+RUN pip3 install "domino[clip,text] @ git+https://github.com/HazyResearch/domino@main"
+
+
+RUN conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7  -c pytorch -c nvidia
+RUN conda install pandas matplotlib scikit-image seaborn pip jupyter notebook 
+RUN conda install wandb gxx gcc --channel conda-forge
+RUN conda install python-mnist -c sorki
