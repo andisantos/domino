@@ -12,7 +12,7 @@ RUN wget \
     && bash /Miniconda3-py38_23.5.2-0-Linux-x86_64.sh -b \
     && rm -f /Miniconda3-py38_23.5.2-0-Linux-x86_64.sh
 
-RUN pip3 install opencv-python meerkat-ml scikit-learn numpy==1.18.0 tqdm==4.49.0 ipywidgets seaborn pydantic==1.10.8
+RUN pip3 install opencv-python meerkat-ml scikit-learn==1.3.1  numpy==1.18.0 tqdm==4.49.0 ipywidgets seaborn pydantic==1.10.8
 
 # RUN conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 RUN conda install pandas matplotlib jupyter notebook 
