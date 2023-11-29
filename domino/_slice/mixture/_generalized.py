@@ -833,7 +833,7 @@ class GeneralizedMixture(BaseMixture):
             lower_bound = -np.infty if do_init else self.lower_bound_
 
             for n_iter in tqdm(
-                range(1, self.max_iter + 1), colour="#f17a4a", disable=not self.pbar
+                range(1, self.max_iter + 1), disable=not self.pbar
             ):
                 prev_lower_bound = lower_bound
 

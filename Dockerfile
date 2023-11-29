@@ -19,3 +19,4 @@ RUN conda install pandas matplotlib jupyter notebook
 # RUN conda install wandb gxx gcc --channel conda-forge
 
 RUN pip3 install "domino[all] @ git+https://github.com/HazyResearch/domino@main"
+RUN pip3 install git+https://github.com/openai/CLIP.git
