@@ -10,7 +10,7 @@ from typing import List
 import meerkat as mk
 
 
-def unpack_args(data: mk.DataFrame, *args):
+def unpack_args(data, *args):
     if any(map(lambda x: isinstance(x, str), args)) and data is None:
         raise ValueError("If args are strings, `data` must be provided.")
 

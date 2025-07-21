@@ -7,13 +7,13 @@ from ._slice.multiaccuracy import MultiaccuracySlicer
 from ._slice.mlp import MLPSlicer
 from ._slice.fused import FusedSlicer
 from ._slice.abstract import Slicer 
-from ._describe.generate import generate_candidate_descriptions
-from ._describe.abstract import Describer
-from ._describe.mean import MeanDescriber
-from ._describe.corr import CorrDescriber
-from ._describe import describe
-from .main import discover
-from .gui import explore
+# from ._describe.generate import generate_candidate_descriptions
+# from ._describe.abstract import Describer
+# from ._describe.mean import MeanDescriber
+# from ._describe.corr import CorrDescriber
+# from ._describe import describe
+# from .main import discover
+# from .gui import explore
 
 __all__ = [
     "DominoSlicer",
@@ -24,13 +24,13 @@ __all__ = [
     "MultiaccuracySlicer",
     "FusedSlicer",
     "Slicer",
-    "Describer",
-    "MeanDescriber",
-    "CorrDescriber",
+#     "Describer",
+#     "MeanDescriber",
+#     "CorrDescriber",
     "embed",
     "encoders",
     "explore",
-    "describe",
+#     "describe",
     "discover",
-    "generate_candidate_descriptions",
+#     "generate_candidate_descriptions",
 ]

@@ -10,7 +10,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from meerkat.columns.tensor.torch import TorchTensorColumn
+# from meerkat.columns.tensor.torch import TorchTensorColumn
 from sklearn.linear_model import Ridge
 from sklearn.metrics import roc_auc_score
 from torch.nn.functional import cross_entropy
@@ -95,7 +95,7 @@ class MultiaccuracySlicer(Slicer):
 
     def fit(
         self,
-        data: Union[dict, mk.DataFrame] = None,
+        data = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",
@@ -192,7 +192,7 @@ class MultiaccuracySlicer(Slicer):
 
     def predict(
         self,
-        data: Union[dict, mk.DataFrame] = None,
+        data = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",
@@ -237,7 +237,7 @@ class MultiaccuracySlicer(Slicer):
 
     def predict_proba(
         self,
-        data: Union[dict, mk.DataFrame] = None,
+        data = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = "target",
         pred_probs: Union[str, np.ndarray] = "pred_probs",

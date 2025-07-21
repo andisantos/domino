@@ -49,7 +49,7 @@ class SpotlightSlicer(Slicer):
 
     def fit(
         self,
-        data: Union[dict, mk.DataFrame] = None,
+        data = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -96,7 +96,7 @@ class SpotlightSlicer(Slicer):
 
     def predict_proba(
         self,
-        data: Union[dict, mk.DataFrame] = None,
+        data = None,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,
@@ -128,7 +128,7 @@ class SpotlightSlicer(Slicer):
 
     def predict(
         self,
-        data: mk.DataFrame,
+        data,
         embeddings: Union[str, np.ndarray] = "embedding",
         targets: Union[str, np.ndarray] = None,
         pred_probs: Union[str, np.ndarray] = None,

@@ -22,7 +22,7 @@ encoders.register(robust, aliases=[])
 encoders.register(transformers, aliases=[])
 
 
-def infer_modality(col: mk.Column):
+def infer_modality(col):
 
     if isinstance(col, mk.ImageColumn):
         return "image"
@@ -33,7 +33,7 @@ def infer_modality(col: mk.Column):
 
 
 def embed(
-    data: mk.DataFrame,
+    data,
     input_col: str,
     encoder: Union[str, Encoder] = "clip",
     modality: str = None,
@@ -43,7 +43,7 @@ def embed(
     num_workers: int = 4,
     batch_size: int = 128,
     **kwargs,
-) -> mk.DataFrame:
+):
     """Embed a column of data with an encoder from the encoder registry.
 
     Examples
@@ -122,7 +122,7 @@ def embed(
 
 
 def _embed(
-    data: mk.DataFrame,
+    data,
     input_col: str,
     out_col: str,
     encode: Callable,

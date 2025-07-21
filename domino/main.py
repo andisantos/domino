@@ -8,19 +8,19 @@ import numpy as np
 from ._slice.abstract import Slicer
 from ._slice.mixture import MixtureSlicer
 from ._embed import embed
-from ._describe.abstract import Describer
+# from ._describe.abstract import Describer
 from ._describe.mean import MeanDescriber
 
 
 def discover(
-    data: Union[dict, mk.DataFrame] = None,
+    data = None,
     embeddings: Union[str, np.ndarray] = "embedding",
     targets: Union[str, np.ndarray] = "target",
     pred_probs: Union[str, np.ndarray] = "pred_probs",
     losses: Union[str, np.ndarray] = "loss",
     split: Union[str, np.ndarray] = "split",
     slicer: Slicer = None,
-    describer: Describer = None,
+    describer=None,
 ) -> Tuple[np.ndarray, List[Dict]]:
 
     embeddings, targets, pred_probs, losses, split = unpack_args(
