@@ -66,8 +66,6 @@ def gen_tsne(predict, clip_emb, plot_n = None, n = 5):
 
 # ## 2 classes | 3 slices
 
-
-
 slicer = DominoSlicer(
     y_log_likelihood_weight=10,
     y_hat_log_likelihood_weight=10,
