@@ -13,10 +13,10 @@ idx_to_classname ={0: 'bathroom', 1: 'bedroom', 2: 'childs_room',
                    3: 'classroom', 4: 'dressing_room', 5: 'living_room',
                    6: 'studio', 7: "swimming_pool"}
 
-data_path = "../adversarial-sets/data/Places8_paths_and_labels_complete_train.npy"
+data_path = "/home/andreza.santos/data/places8/places8_train.npy"
 places_ds = [PlacesDataset(data_path,
                            onlylabels=[k]) for k in range(8)]
-batch_size = 64
+batch_size = 1
 train_dataloaders_class = {k: DataLoader(places_ds[k],
                                          batch_size=batch_size,
                                          shuffle=False,
@@ -33,6 +33,7 @@ model, preprocess = clip.load("ViT-B/32", device=device)
 print(model)
 
 print(preprocess)
+
 
 for i in range(8):
     image_features = []
@@ -52,6 +53,6 @@ for i in range(8):
     
     image_features = np.asarray(image_features)
     text_features = np.asarray(text_features)
-    np.save(f"places8_image_features_clip_class_{i}.npy", image_features)
-    np.save(f"places8_text_features_clip_class_{i}.npy", text_features)
+    np.save(f"data/image_features_clip_class_{i}.npy", image_features)
+    np.save(f"data/text_features_clip_class_{i}.npy", text_features)
 

@@ -27,7 +27,7 @@ __all__ = [
 #     "Describer",
 #     "MeanDescriber",
 #     "CorrDescriber",
-    "embed",
+    # "embed",
     "encoders",
     "explore",
 #     "describe",

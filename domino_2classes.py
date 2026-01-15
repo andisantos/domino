@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# !pip3 install fvcore
 
 from domino import DominoSlicer
 import numpy as np
@@ -10,21 +9,22 @@ import pandas as pd
 sklearn.__version__
 
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 import random
 import torch
 import os
+from time import time
 
 seed = 42
 random.seed(seed)
 torch.manual_seed(seed)
 np.random.seed(seed)
-outpath = os.path.join("outputs", "places2_sun_mit_softmax")
+outpath = os.path.join("outputs", "places2")
 os.makedirs(outpath, mode=777, exist_ok=True)
 
 
-def gen_tsne(predict, clip_emb, plot_n = None, n = 5):
+def gen_tsne(predict, clip_emb, plot_n = None, n = 5, pdf_name=None):
     cluster_label = np.argmax(predict, axis = -1)
     label, counts = np.unique(cluster_label, return_counts = True)
     print(label, counts)
@@ -51,7 +51,9 @@ def gen_tsne(predict, clip_emb, plot_n = None, n = 5):
 
     tsne_result_df = pd.DataFrame({'component1': X_embedded[:,0],
                                    'component2': X_embedded[:,1],
-                                   'label': filtered_labels})
+                                   'clusterlabel': filtered_labels})
+    if pdf_name:
+        tsne_result_df.to_csv(pdf_name,index=False)
     #fig, ax = plt.subplots(1)
     #sns.scatterplot(x = 'component1',
     #                y = 'component2',
@@ -73,24 +75,23 @@ slicer = DominoSlicer(
     n_slices=3,
     confusion_noise= 0.001,
     random_state=42)
-slicer.get_params()
+print(slicer.get_params())
 
 
 # ## class 1: bedroom | 3 slices
-
-places8_clip_emd = "data/places8_image_features_clip_class_1.npy"  # embeds created for 8 classes
-places8_image_softmax = "data_sun-mit/features_resnet50_softmax_class_0.npy" # bedroom
-places8_targets = "data/places8_image_targets.npy" #created for 8 classes
+places8_clip_emd = "data/image_features_clip_class_1.npy"  # embeds created for 8 classes
+places8_image_softmax = "data/features_resnet50_class_0.npy" # bedroom
+places8_targets = "data/places8_image_targets.npy" #created for 2 classes
 clip_emb_1 = np.load(places8_clip_emd)
 preds_softmax_1 = np.load(places8_image_softmax)
 places8_targets = np.load(places8_targets)
-places8_targets_1 = np.zeros(places8_targets[np.where(places8_targets==1)[0]].shape, dtype=np.uint8)
+places8_targets_1 = np.zeros(places8_targets[np.where(places8_targets==0)[0]].shape, dtype=np.uint8)
 
 # filter softmax per index 1
 print("Data with class 0 (bedroom):")
-print(f"Embed shape {clip_emb_1.shape} | target shape {places8_targets_1.shape} | preds softmax shape {preds_softmax_1.shape}")
+print(f"Clip embed shape {clip_emb_1.shape} | targets shape {places8_targets_1.shape} | preds softmax shape {preds_softmax_1.shape}")
 
-
+start_time = time()
 run_id = 0
 executions = 0
 while run_id <= 5:
@@ -103,35 +104,41 @@ while run_id <= 5:
     print(label, counts)
     counts_min = min(counts)
     counts_max = max(counts)
-    if counts_min >= 3000 and counts_max <=70000:
+    # if counts_min >= 5000 and counts_max <=60000:
+    if counts_min >= clip_emb_1.shape[0]*0.05 and counts_max <= clip_emb_1.shape[0]*0.65:
         print(f"Saving! {run_id}")
-#         gen_tsne(predict, clip_emb_1, n=3)
+        gen_tsne(predict, clip_emb_1, n=3, pdf_name=f"{outpath}/tsne_components_bedroom_run_{run_id}.csv")
         df = pd.DataFrame(predict, columns=['group_0', 'group_1', 'group_2'])
         print(len(df))
-        df.to_csv(f"{outpath}/class1_bedroom_3slices_singlesoftmax_{run_id}.csv", index = False, encoding='utf-8')
+        df.to_csv(f"{outpath}/bedroom_3slices_{run_id}.csv", index = False, encoding='utf-8')
         run_id += 1
 
-print("Total executions for class BEDROOM:", executions)
+total = time() - start_time
+
+print("Total executions for class BEDROOM:", executions, "with",  total/60, "minutes" )
 
 
 # ## class 2: child's room | 3 slices
 
 places8_clip_emd = "data/places8_image_features_clip_class_2.npy" # embeds created for 8 classes
-places8_image_softmax = "data_sun-mit/features_resnet50_softmax_class_1.npy" # childs_room
-places8_targets = "data/places8_image_targets.npy" #created for 8 classes
+places8_image_softmax = "data/features_resnet50_class_1.npy" # childsroom
+places8_targets = "data/places8_image_targets.npy" #created for 2 classes
 
 places8_targets = np.load(places8_targets)
 clip_emb_2 = np.load(places8_clip_emd)
 preds_softmax_2 = np.load(places8_image_softmax)
-places8_targets_2 = np.ones(places8_targets[np.where(places8_targets == 2)[0]].shape, dtype=np.uint8)
+places8_targets_2 = np.ones(places8_targets[np.where(places8_targets == 1)[0]].shape, dtype=np.uint8)
 
 # filter softmax per index 2
 print("Data with class 1 (childsroom")
-print(f"Embed shape {clip_emb_2.shape} | target shape {places8_targets_2.shape} | preds softmax shape {preds_softmax_2.shape}")
+print(f"Clip embed shape {clip_emb_2.shape} | target shape {places8_targets_2.shape} | preds softmax shape {preds_softmax_2.shape}")
 
+
+start_time = time()
 run_id = 0
 executions = 0
 while run_id <= 5:
+    executions+=1
     _ = slicer.fit(embeddings=clip_emb_2, targets =places8_targets_2, pred_probs=preds_softmax_2)
     predict = slicer.predict(embeddings=clip_emb_2, targets=places8_targets_2, pred_probs=preds_softmax_2)
     
@@ -140,12 +147,13 @@ while run_id <= 5:
     print(label, counts)
     counts_min = min(counts)
     counts_max = max(counts)
-    if counts_min >= clip_emb_2.shape[0]*0.13:
+    if counts_min >= clip_emb_2.shape[0]*0.15:
         print(f"Saving! {run_id}")
-#         gen_tsne(predict, clip_emb_2, n=3)
+        gen_tsne(predict, clip_emb_1, n=3, pdf_name=f"{outpath}/tsne_components_childsroom_run_{run_id}.csv")
         df = pd.DataFrame(predict, columns=['group_0', 'group_1', 'group_2'])
         print(len(df))
-        df.to_csv(f"{outpath}/class1_childsroom_3slices_singlesoftmax_{run_id}.csv", index=False, encoding='utf-8')
+        df.to_csv(f"{outpath}/childsroom_3slices_{run_id}.csv", index=False, encoding='utf-8')
         run_id += 1
 
-print("Total executions for class CHILDSROOM:", executions)
+total = time() - start_time
+print("Total executions for class CHILDSROOM:", executions, "with",  total/60, "minutes" )
