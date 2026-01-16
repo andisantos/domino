@@ -53,7 +53,7 @@ def gen_tsne(predict, clip_emb, plot_n = None, n = 5, pdf_name=None):
                                    'component2': X_embedded[:,1],
                                    'clusterlabel': filtered_labels})
     if pdf_name:
-        tsne_result_df.to_csv(pdf_name,index=False)
+        tsne_result_df.to_csv(pdf_name, index=False)
     #fig, ax = plt.subplots(1)
     #sns.scatterplot(x = 'component1',
     #                y = 'component2',
@@ -73,8 +73,8 @@ slicer = DominoSlicer(
     y_hat_log_likelihood_weight=10,
     n_mixture_components=100,
     n_slices=3,
-    confusion_noise= 0.001,
-    random_state=42)
+    confusion_noise= 0.001
+    )
 print(slicer.get_params())
 
 
@@ -105,7 +105,7 @@ while run_id <= 5:
     counts_min = min(counts)
     counts_max = max(counts)
     # if counts_min >= 5000 and counts_max <=60000:
-    if counts_min >= clip_emb_1.shape[0]*0.05 and counts_max <= clip_emb_1.shape[0]*0.65:
+    if counts_min >= int(clip_emb_1.shape[0]*0.10) and counts_max <= clip_emb_1.shape[0]*0.65:
         print(f"Saving! {run_id}")
         gen_tsne(predict, clip_emb_1, n=3, pdf_name=f"{outpath}/tsne_components_bedroom_run_{run_id}.csv")
         df = pd.DataFrame(predict, columns=['group_0', 'group_1', 'group_2'])
@@ -132,7 +132,6 @@ places8_targets_2 = np.ones(places8_targets[np.where(places8_targets == 1)[0]].s
 # filter softmax per index 2
 print("Data with class 1 (childsroom")
 print(f"Clip embed shape {clip_emb_2.shape} | target shape {places8_targets_2.shape} | preds softmax shape {preds_softmax_2.shape}")
-
 
 start_time = time()
 run_id = 0

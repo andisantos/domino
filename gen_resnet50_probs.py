@@ -32,12 +32,12 @@ print(device)
 
 model_path = "/home/andreza.santos/models/resnet50/pretraining/2c_SUN_MIT_bestmodel.pth"
 model = torchvision.models.resnet50()
-# model.fc = torch.nn.Linear(in_features=2048, out_features=n_classes, bias=True)
+model.fc = torch.nn.Linear(in_features=2048, out_features=n_classes, bias=True)
 model.load_state_dict(torch.load(model_path))
 model.eval()
 
 # Create the feature extraction model
-feature_extractor = create_feature_extractor(model, return_nodes={'avgpool': 'features'})
+# feature_extractor = create_feature_extractor(model, return_nodes={'avgpool': 'features'})
 
 softmax_output_0 = [] 
 softmax_output_1 = [] 
@@ -53,16 +53,17 @@ for inputs, labels, _ in tqdm(dataloader):
     targets += list(labels.cpu().data.numpy())
 
     with torch.no_grad():
-        features = feature_extractor(inputs)
+        pred_probs = torch.nn.Softmax()(model(inputs))
+        pred_probs = pred_probs.cpu().data.numpy()
 
     if labels.item() == 0:
-        for out_prediction in features["features"]:
-            features_list = out_prediction.squeeze().numpy().tolist()
-            softmax_output_0.append(features_list)
+        for out_prediction in pred_probs:
+            # features_list = out_prediction.squeeze().numpy().tolist()
+            softmax_output_0.append(out_prediction.tolist())
     elif labels.item() == 1:
-        for out_prediction in features["features"]:
-            features_list = out_prediction.squeeze().numpy().tolist()
-            softmax_output_1.append(features_list)
+        for out_prediction in pred_probs:
+            # features_list = out_prediction.squeeze().numpy().tolist()
+            softmax_output_1.append(out_prediction.tolist())
 
 targets = np.asarray(targets)
 print("targets shape", targets.shape)
